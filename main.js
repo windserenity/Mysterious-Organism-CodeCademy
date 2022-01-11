@@ -14,13 +14,13 @@ const returnRandBase = () => {
   };
   
   
-const pAequorFactory = (uniqueSpecimenNum, dnaArr) => {
+const pAequorFactory = (uniqueSpecimenNum, dna) => {
     return {
-      specimenNum: uniqueSpecimenNum,
-      dna: dnaArr,
+      uniqueSpecimenNum,
+      dna,
       mutate(){
         let newBase = returnRandBase();
-        let newIndex =  Math.floor(Math.random() * dnaArr.length);
+        let newIndex =  Math.floor(Math.random() * dna.length);
         // console.log('new Base: ' + newBase + ' ' + 'new index ' + this.dna[newIndex])
         if (this.dna[newIndex] !== newBase){
            this.dna[newIndex] = newBase; 
@@ -33,7 +33,7 @@ const pAequorFactory = (uniqueSpecimenNum, dnaArr) => {
       compareDNA(object){
           let counter = 0;
           object.forEach((num1, index) => {
-            const num2 = dnaArr[index];
+            const num2 = dna[index];
             //console.log(num1, num2) // comapre the two arryas my element. 
              if (num1 === num2){
                counter += 1;
@@ -45,7 +45,7 @@ const pAequorFactory = (uniqueSpecimenNum, dnaArr) => {
           return `specimen #2 has ${percentage.toFixed(1)}% DNA in common.` ;
       },
       willLikelySurvive(){
-      let arr = this.dna();
+      let arr = this.dna;
         // console.log(arr);
         let counter = 0;  
             arr.forEach(element=> {
@@ -62,5 +62,25 @@ const pAequorFactory = (uniqueSpecimenNum, dnaArr) => {
       }
     };
 
+    const generateSpecimen = numberOfSpecimen => {
+        let arrOfSpecimen = [];
+        let i = 0;
+          while (arrOfSpecimen.length !== numberOfSpecimen) {
+                i += 1; 
+                let  pAequor = pAequorFactory(i, mockUpStrand());
+                  if (pAequor.willLikelySurvive() === true){
+                    arrOfSpecimen.push(pAequor);
+                  }            
+          }
+          console.log('ran: ' + i + ' times.');
+      return arrOfSpecimen;    
+    };
+    const organizemsThatWillSurvice = generateSpecimen(30);
+      
+      console.log(organizemsThatWillSurvice);
+      console.log('the Chosen one ' + organizemsThatWillSurvice[1].dna);
+      console.log('the Chosen one ' + organizemsThatWillSurvice[1].mutate());
+      console.log('the Chosen one ' + organizemsThatWillSurvice[1].willLikelySurvive());
+      console.log('the Chosen one ' + organizemsThatWillSurvice[1].compareDNA(['A', 'T', 'C', 'G', 'C', 'C', 'C', 'G','A', 'T', 'A', 'C','G', 'C', 'C']));
 
-
+      
