@@ -29,6 +29,7 @@ const pAequorFactory = (uniqueSpecimenNum, dnaArr) => {
         }
         return this.dna
         },
+
       compareDNA(object){
           let counter = 0;
           object.forEach((num1, index) => {
@@ -43,13 +44,23 @@ const pAequorFactory = (uniqueSpecimenNum, dnaArr) => {
           
           return `specimen #2 has ${percentage.toFixed(1)}% DNA in common.` ;
       },
+      willLikelySurvive(){
+      let arr = this.dna();
+        // console.log(arr);
+        let counter = 0;  
+            arr.forEach(element=> {
+                if (element === 'C' || element === 'G'){
+                    counter += 1;
+                }
+            })
+          let percentage = ((counter / arr.length) *100).toFixed(1); 
+          // console.log(percentage);
+            return percentage >= 60 ? true : false;
+      },
       
 
       }
     };
- 
-const testARR = mockUpStrand();
-let pAequor = pAequorFactory(1,['T', 'T', 'A', 'G','C', 'C', 'T', 'A','T', 'G', 'G', 'G','T', 'C', 'A']);
 
-//console.log(pAequor.mutate());
-console.log(pAequor.compareDNA(testARR));
+
+
